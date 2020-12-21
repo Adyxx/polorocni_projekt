@@ -9,7 +9,8 @@ from pygame.locals import (
 )
 standing = True
 
-
+rozhodnuti1 = 0
+rozhodnuti = 0
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__()
@@ -80,7 +81,9 @@ while standing:
     SCREEN_HEIGHT = 600
     cislo = 1
     # random rozhodnutí, jaké město se bude hádat
-    rozhodnuti = random.randint(1,4)
+    while rozhodnuti == rozhodnuti1:
+        rozhodnuti = random.randint(1,4)
+    rozhodnuti1 = rozhodnuti
     misto = ""
     if rozhodnuti == 1:
         misto = "opava"
