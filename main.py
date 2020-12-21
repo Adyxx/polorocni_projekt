@@ -10,12 +10,14 @@ from pygame.locals import (
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 cislo = 1
+# random rozhodnutí, jaké město se bude hádat
 rozhodnuti = random.randint(1,2)
 misto = ""
 if rozhodnuti == 1:
     misto = "opava"
 elif rozhodnuti == 2:
     misto = "praha"
+
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__();
@@ -27,7 +29,7 @@ class Foto(pygame.sprite.Sprite):
             center=((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2 - 90),
             )
         )
-    # pohyb hráče
+    # znovunačítání obrázků při kliknutí
     def update(self, pressed_keys, cislo):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
@@ -44,9 +46,6 @@ pygame.font.init()
 clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-score_count = 0
-survival_time = 0
 
 foto = Foto()
 
@@ -67,21 +66,12 @@ while running:
 
         elif event.type == QUIT:
             running = False
-
+        # při kliknutí update foto
         if event.type == pygame.MOUSEBUTTONDOWN:
             cislo = cislo + 1
             if cislo == 5:
                 cislo = 1
             foto.update(pressed_keys, cislo)
-
-
-
-
-
-
-
-
-
 
     screen.fill((10, 10, 10))
 
@@ -93,7 +83,7 @@ while running:
         screen.blit(entity.surf, entity.rect)
 
     pygame.display.flip()
-
+    #kolik snímků za vteřinu, dosova by mohlo být tak 2, moc se to tam nehýbe :)
     clock.tick(45)
 
 pygame.mixer.quit()
