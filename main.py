@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
@@ -9,12 +10,18 @@ from pygame.locals import (
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 cislo = 1
+rozhodnuti = random.randint(1,2)
+misto = ""
+if rozhodnuti == 1:
+    misto = "opava"
+elif rozhodnuti == 2:
+    misto = "praha"
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__();
 
         # 800x468 rozměry všech fotek
-        self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
+        self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
 
         self.rect = self.surf.get_rect(
             center=((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2 - 90),
@@ -22,7 +29,7 @@ class Foto(pygame.sprite.Sprite):
         )
     # pohyb hráče
     def update(self, pressed_keys, cislo):
-        self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
+        self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
 
 
