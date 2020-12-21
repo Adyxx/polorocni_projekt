@@ -5,6 +5,7 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
     MOUSEBUTTONDOWN,
+    RLEACCEL
 )
 
 SCREEN_WIDTH = 800
@@ -38,6 +39,49 @@ class Foto(pygame.sprite.Sprite):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
 
+class Button(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Button, self).__init__()
+
+        self.surf  = pygame.image.load(f"foto/button_bg.jpg").convert()
+
+        self.rect = self.surf.get_rect(
+            center=((SCREEN_WIDTH/2 - 200),(SCREEN_HEIGHT/2 + 257),
+            )
+        )
+
+class Button2(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Button2, self).__init__()
+
+        self.surf  = pygame.image.load(f"foto/button_bg.jpg").convert()
+
+        self.rect = self.surf.get_rect(
+            center=((SCREEN_WIDTH/2 - 200),(SCREEN_HEIGHT/2 + 182),
+            )
+        )
+
+class Button3(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Button3, self).__init__()
+
+        self.surf  = pygame.image.load(f"foto/button_bg.jpg").convert()
+
+        self.rect = self.surf.get_rect(
+            center=((SCREEN_WIDTH/2 + 200),(SCREEN_HEIGHT/2 + 257),
+            )
+        )
+
+class Button4(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Button4, self).__init__()
+
+        self.surf  = pygame.image.load(f"foto/button_bg.jpg").convert()
+
+        self.rect = self.surf.get_rect(
+            center=((SCREEN_WIDTH/2 + 200),(SCREEN_HEIGHT/2 + 182),
+            )
+        )
 
 
 pygame.mixer.init()
@@ -45,17 +89,23 @@ pygame.mixer.init()
 pygame.init()
 pygame.font.init()
 
-
-
 clock = pygame.time.Clock()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-foto = Foto()
-
 all_sprites = pygame.sprite.Group()
-all_sprites.add(foto)
 
+foto = Foto()
+button = Button()
+button2 = Button2()
+button3 = Button3()
+button4 = Button4()
+all_sprites.add(button)
+all_sprites.add(button2)
+all_sprites.add(button3)
+all_sprites.add(button4)
+
+all_sprites.add(foto)
 
 
 running = True
@@ -72,19 +122,40 @@ while running:
             running = False
         # při kliknutí update foto
         if event.type == pygame.MOUSEBUTTONDOWN:
-            cislo = cislo + 1
-            if cislo == 5:
-                cislo = 1
+            if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292: 
+                print('hey')
+            elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217: 
+                print('heyo')
+            elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
+                print('heya')
+            elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
+                print('heye')
+            else:
+                cislo = cislo + 1
+                if cislo == 5:
+                    cislo = 1
             foto.update(pressed_keys, cislo)
 
-    screen.fill((10, 10, 10))
+    screen.fill((0, 0, 0))
 
     surf = pygame.Surface((50, 50))
 
     rect = surf.get_rect()
+    width = screen.get_width()
+    height = screen.get_height()
+    mouse = pygame.mouse.get_pos()
+
+    ###################################################
+    text = pygame.font.SysFont('Arial Black', 50)
+    text_b1 = text.render(f'text', True, (255, 255, 255))
+    textRect = text_b1.get_rect()
+    textRect.center = (width/2-200, height / 2+252)
+    ###################################################
 
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
+        screen.blit(text_b1, textRect)
+        
 
     pygame.display.flip()
     #kolik snímků za vteřinu, dosova by mohlo být tak 2, moc se to tam nehýbe :)
