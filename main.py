@@ -1,5 +1,4 @@
 import pygame
-
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
@@ -64,7 +63,7 @@ while running:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             cislo = cislo + 1
-            if cislo == 3:
+            if cislo == 5:
                 cislo = 1
             foto.update(pressed_keys, cislo)
 
