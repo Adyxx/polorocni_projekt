@@ -32,9 +32,7 @@ class Foto(pygame.sprite.Sprite):
     # pohyb hráče
     def update(self, pressed_keys, cislo):
         if event.type == pygame.MOUSEBUTTONUP:
-            cislo += 1
-            if cislo == 2:
-                cislo = 1
+            cislo +=1
             self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
 
 
