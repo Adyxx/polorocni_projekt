@@ -1,14 +1,6 @@
 import pygame
-import random
-import time
 
-import sprites
 from pygame.locals import (
-    RLEACCEL,
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
     K_ESCAPE,
     KEYDOWN,
     QUIT,
@@ -20,7 +12,7 @@ SCREEN_HEIGHT = 600
 cislo = 1
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
-        super(Foto, self).__init__()
+        super(Foto, self).__init__();
 
         # 800x468 rozměry všech fotek
         self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
@@ -31,9 +23,8 @@ class Foto(pygame.sprite.Sprite):
         )
     # pohyb hráče
     def update(self, pressed_keys, cislo):
-        if event.type == pygame.MOUSEBUTTONUP:
-            cislo +=1
-            self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
+        self.surf = pygame.image.load(f"foto/opava{cislo}.jpg").convert()
+        pygame.time.delay(200)
 
 
 
@@ -75,6 +66,7 @@ all_sprites.add(foto)
 running = True
 
 while running:
+    pressed_keys = pygame.mouse.get_pressed()
     for event in pygame.event.get():
         if event.type == KEYDOWN:
 
@@ -84,10 +76,18 @@ while running:
         elif event.type == QUIT:
             running = False
 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            cislo = cislo + 1
+            if cislo == 3:
+                cislo = 1
+            foto.update(pressed_keys, cislo)
 
 
-    pressed_keys = pygame.mouse.get_pressed()
-    foto.update(pressed_keys, cislo)
+
+
+
+
+
 
 
 
