@@ -11,16 +11,20 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 cislo = 1
 # random rozhodnutí, jaké město se bude hádat
-rozhodnuti = random.randint(1,2)
+rozhodnuti = random.randint(1,4)
 misto = ""
 if rozhodnuti == 1:
     misto = "opava"
 elif rozhodnuti == 2:
+    misto = "ostrava"
+elif rozhodnuti == 3:
+    misto = "paris"
+elif rozhodnuti == 4:
     misto = "praha"
 
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
-        super(Foto, self).__init__();
+        super(Foto, self).__init__()
 
         # 800x468 rozměry všech fotek
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
