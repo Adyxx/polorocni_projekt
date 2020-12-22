@@ -12,6 +12,7 @@ standing = True
 score = 0
 rozhodnuti1 = 0
 rozhodnuti = 0
+# pokud soubor score neexistuje, vytvoř ho
 try:
     f = open("score.txt", "r")
 except:
