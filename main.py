@@ -296,11 +296,11 @@ while standing:
 
         text_score = score_text.render(f'Score: {score}', False, (0,0,0))
         scoreRect = text_score.get_rect()
-        scoreRect.center = (width / 2 - 340, height / 2 - 250)
+        scoreRect = (width / 2 - 390, height / 2 - 260)
 
         h_text_score = h_score_text.render(f'High score: {h_score}', False, (0, 0, 0))
         h_scoreRect = h_text_score.get_rect()
-        h_scoreRect.center = (width / 2 - 308, height / 2 - 280)
+        h_scoreRect = (width / 2 - 390, height / 2 - 290)
         ###################################################
 
         for entity in all_sprites:
