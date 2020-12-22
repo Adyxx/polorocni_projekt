@@ -1,5 +1,6 @@
 import pygame
 import random
+import os
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
@@ -8,7 +9,6 @@ from pygame.locals import (
     RLEACCEL
 )
 standing = True
-
 
 rozhodnuti1 = 0
 rozhodnuti = 0
@@ -120,7 +120,7 @@ while standing:
     cislo = 1
     # random rozhodnutí, jaké město se bude hádat
     while rozhodnuti == rozhodnuti1:
-        rozhodnuti = random.randint(1,4)
+        rozhodnuti = random.randint(1,8)
     rozhodnuti1 = rozhodnuti
     misto = ""
     if rozhodnuti == 1:
@@ -131,10 +131,18 @@ while standing:
         misto = "paris"
     elif rozhodnuti == 4:
         misto = "praha"
+    elif rozhodnuti == 5:
+        misto = "tokyo"
+    elif rozhodnuti == 6:
+        misto = "moskva"
+    elif rozhodnuti == 7:
+        misto = "new_york"
+    elif rozhodnuti == 8:
+        misto = "kyoto"
 
     
-    pole = [0,1,2,3,4,5]
-    val = [0,0,0,0,0,0]
+    pole = [0,1,2,3,4,5,6,7]
+    val = [0,0,0,0,0,0,0,0]
     random.shuffle(pole)
     word = ''
     
@@ -149,8 +157,12 @@ while standing:
             word = 'Opava'
         elif i == 4:
             word = 'Kyoto'
-        else:
+        elif i == 5:
             word = 'New York'
+        elif i == 6:
+            word = 'Moskva'
+        else:
+            word = 'Tokyo'
         val[i] = word
     random.shuffle(val)
 
@@ -170,9 +182,7 @@ while standing:
         global score
         global h_score
         if misto == 'opava' and val[a] == 'Opava':
-
             score +=1
-
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
@@ -182,9 +192,7 @@ while standing:
             return True
 
         elif misto == 'ostrava' and val[a] == 'Ostrava':
-
             score +=1
-
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
@@ -194,9 +202,8 @@ while standing:
             return True
 
         elif misto == 'paris' and val[a] == 'Paříž':
-
             score +=1
-          
+         
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
@@ -206,9 +213,7 @@ while standing:
             return True
 
         elif misto == 'praha' and val[a] == 'Praha':
-
             score +=1
-
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
@@ -217,6 +222,44 @@ while standing:
                 h_score = score
             return True
 
+        elif misto == 'moskva' and val[a] == 'Moskva':
+            score +=1
+            if (score > int(f.read())):
+                f.close()
+                f = open("score.txt", "w")
+                f.write(str(score))
+                f.close()
+                h_score = score
+            return True
+
+        elif misto == 'new_york' and val[a] == 'New York':
+            score +=1
+            if (score > int(f.read())):
+                f.close()
+                f = open("score.txt", "w")
+                f.write(str(score))
+                f.close()
+                h_score = score
+            return True
+
+        elif misto == 'tokyo' and val[a] == 'Tokyo':
+            score +=1
+            if (score > int(f.read())):
+                f.close()
+                f = open("score.txt", "w")
+                f.write(str(score))
+                f.close()
+                h_score = score
+            return True
+        elif misto == 'kyoto' and val[a] == 'Kyoto':
+            score +=1
+            if (score > int(f.read())):
+                f.close()
+                f = open("score.txt", "w")
+                f.write(str(score))
+                f.close()
+                h_score = score
+            return True        
         else:
             score = 0
             return False
@@ -235,7 +278,18 @@ while standing:
     elif misto == 'ostrava':
         x = val.index('Ostrava')
         answer_on_button()
-
+    elif misto == 'tokyo':
+        x = val.index('Tokyo')
+        answer_on_button()
+    elif misto == 'moskva':
+        x = val.index('Moskva')
+        answer_on_button()
+    elif misto == 'new_york':
+        x = val.index('New York')
+        answer_on_button()
+    elif misto == 'kyoto':
+        x = val.index('Kyoto')
+        answer_on_button()
 
 
     pygame.mixer.init()
@@ -315,7 +369,7 @@ while standing:
                     cislo = cislo + 1
                     if cislo == 5:
                         cislo = 1
-                        
+
                 foto.update(pressed_keys, cislo)
 
         screen.fill((0, 0, 0))
@@ -365,7 +419,7 @@ while standing:
             screen.blit(text_score, scoreRect)
             screen.blit(h_text_score, h_scoreRect)
         pygame.display.flip()
-        #kolik snímků za vteřinu, dosova by mohlo být tak 2, moc se to tam nehýbe :)
+
         clock.tick(45)
 
     pygame.mixer.quit()
