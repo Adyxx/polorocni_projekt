@@ -1,5 +1,6 @@
 import pygame
 import random
+import os
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
@@ -8,9 +9,22 @@ from pygame.locals import (
     RLEACCEL
 )
 standing = True
-
+score = 0
 rozhodnuti1 = 0
 rozhodnuti = 0
+try:
+    f = open("score.txt", "r")
+except:
+    f = open("score.txt", "w")
+    f.close()
+    f = open("score.txt", "r")
+
+print(f.read())
+
+
+
+
+
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__()
@@ -243,3 +257,5 @@ while standing:
         clock.tick(45)
 
     pygame.mixer.quit()
+
+f.close()
