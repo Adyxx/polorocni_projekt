@@ -94,6 +94,39 @@ while standing:
     elif rozhodnuti == 4:
         misto = "praha"
 
+    
+    pole = [0,1,2,3,4,5]
+    val = [0,0,0,0,0,0]
+    random.shuffle(pole)
+    word = ''
+
+    ###################
+    if misto == 'opava':
+        print('a')
+    elif misto == 'paris':
+        print('a')
+    elif misto == 'praha':
+        print('a')
+    elif misto == 'ostrava':
+        print('a')
+    ###################    
+    
+    for i in pole:
+        if i == 0:
+            word = 'Praha'
+        elif i == 1:
+            word = 'Paříž'
+        elif i == 2:
+            word = 'Ostrava'
+        elif i == 3:
+            word = 'Opava'
+        elif i == 4:
+            word = 'Kyoto'
+        else:
+            word = 'New York'
+        val[i] = word
+    random.shuffle(val)
+
 
 
 
@@ -164,15 +197,30 @@ while standing:
 
         ###################################################
         text = pygame.font.SysFont('Arial Black', 50)
-        text_b1 = text.render(f'text', True, (255, 255, 255))
+
+        text_b1 = text.render(f'{val[0]}', True, (255, 255, 255))
         textRect = text_b1.get_rect()
-        textRect.center = (width/2-200, height / 2+252)
+        textRect.center = (width / 2 - 200, height / 2 + 252)
+
+        text_b2 = text.render(f'{val[1]}', True, (255, 255, 255))
+        textRect2 = text_b2.get_rect()
+        textRect2.center = (width / 2 - 200, height / 2 + 177)
+
+        text_b3 = text.render(f'{val[2]}', True, (255, 255, 255))
+        textRect3 = text_b3.get_rect()
+        textRect3.center = (width / 2 + 200, height / 2 + 177)
+
+        text_b4 = text.render(f'{val[3]}', True, (255, 255, 255))
+        textRect4 = text_b4.get_rect()
+        textRect4.center = (width / 2 + 200, height / 2 + 252)
         ###################################################
 
         for entity in all_sprites:
             screen.blit(entity.surf, entity.rect)
             screen.blit(text_b1, textRect)
-
+            screen.blit(text_b2, textRect2)
+            screen.blit(text_b3, textRect3)
+            screen.blit(text_b4, textRect4)
 
         pygame.display.flip()
         #kolik snímků za vteřinu, dosova by mohlo být tak 2, moc se to tam nehýbe :)
