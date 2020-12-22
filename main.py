@@ -99,17 +99,7 @@ while standing:
     val = [0,0,0,0,0,0]
     random.shuffle(pole)
     word = ''
-
-    ###################
-    if misto == 'opava':
-        print('a')
-    elif misto == 'paris':
-        print('a')
-    elif misto == 'praha':
-        print('a')
-    elif misto == 'ostrava':
-        print('a')
-    ###################    
+    correct = random.randint(0,3)
     
     for i in pole:
         if i == 0:
@@ -126,7 +116,21 @@ while standing:
             word = 'New York'
         val[i] = word
     random.shuffle(val)
-
+    
+    x = 0
+    # zjistí index správné odpovědi
+    if misto == 'opava':
+        x = val.index('Opava')
+        print(x)
+    elif misto == 'paris':
+        x = val.index('Paříž')
+        print(x)
+    elif misto == 'praha':
+        x = val.index('Praha')
+        print(x)
+    elif misto == 'ostrava':
+        x = val.index('Ostrava')
+        print(x)
 
 
 
