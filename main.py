@@ -1,6 +1,5 @@
 import pygame
 import random
-import os
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
