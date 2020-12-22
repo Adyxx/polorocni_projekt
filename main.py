@@ -279,7 +279,7 @@ while standing:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
 
-                    is_it_right(0,f)
+
                     if is_it_right(0,f) == True:
                         button.yes_yes()
                     else:
@@ -289,7 +289,7 @@ while standing:
                 elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
 
 
-                    is_it_right(1,f)
+
                     if is_it_right(1,f) == True:
                         button2.yes_yes()
                     else:
@@ -298,22 +298,18 @@ while standing:
                     running = False
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
 
-                    is_it_right(2,f)
+
                     if is_it_right(2,f) == True:
                         button4.yes_yes()
                     else:
                         button4.no_no()
 
                     running = False
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
 
-                    is_it_right(2, f)
-
-                    running = False
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
 
 
-                    is_it_right(3, f)
+
                     if is_it_right(3, f) == True:
                         button3.yes_yes()
                     else:
