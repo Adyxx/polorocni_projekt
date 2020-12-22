@@ -171,6 +171,7 @@ while standing:
         global score
         global h_score
         if misto == 'opava' and val[a] == 'Opava':
+
             score +=1
 
             if (score > int(f.read())):
@@ -179,10 +180,10 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-
             return True
 
         elif misto == 'ostrava' and val[a] == 'Ostrava':
+
             score +=1
 
             if (score > int(f.read())):
@@ -191,10 +192,10 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-
             return True
 
         elif misto == 'paris' and val[a] == 'Paříž':
+
             score +=1
           
             if (score > int(f.read())):
@@ -203,10 +204,10 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-
             return True
 
         elif misto == 'praha' and val[a] == 'Praha':
+
             score +=1
 
             if (score > int(f.read())):
@@ -215,7 +216,6 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-                
             return True
 
         else:
@@ -279,16 +279,14 @@ while standing:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
 
-
                     if is_it_right(0,f) == True:
                         button.yes_yes()
                     else:
                         button.no_no()
 
                     running = False
+
                 elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-
-
 
                     if is_it_right(1,f) == True:
                         button2.yes_yes()
@@ -296,8 +294,8 @@ while standing:
                         button2.no_no()
 
                     running = False
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
 
+                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
 
                     if is_it_right(2,f) == True:
                         button4.yes_yes()
@@ -307,8 +305,6 @@ while standing:
                     running = False
 
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-
-
 
                     if is_it_right(3, f) == True:
                         button3.yes_yes()
@@ -320,6 +316,7 @@ while standing:
                     cislo = cislo + 1
                     if cislo == 5:
                         cislo = 1
+                        
                 foto.update(pressed_keys, cislo)
 
         screen.fill((0, 0, 0))
@@ -353,11 +350,11 @@ while standing:
 
         text_score = score_text.render(f'Score: {score}', False, (0,0,0))
         scoreRect = text_score.get_rect()
-        scoreRect.center = (width / 2 - 340, height / 2 - 250)
+        scoreRect = (width / 2 - 390, height / 2 - 260)
 
         h_text_score = h_score_text.render(f'High score: {h_score}', False, (0, 0, 0))
         h_scoreRect = h_text_score.get_rect()
-        h_scoreRect.center = (width / 2 - 308, height / 2 - 280)
+        h_scoreRect = (width / 2 - 390, height / 2 - 290)
         ###################################################
 
         for entity in all_sprites:
