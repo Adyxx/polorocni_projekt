@@ -99,7 +99,6 @@ while standing:
     val = [0,0,0,0,0,0]
     random.shuffle(pole)
     word = ''
-    correct = random.randint(0,3)
     
     for i in pole:
         if i == 0:
@@ -116,21 +115,34 @@ while standing:
             word = 'New York'
         val[i] = word
     random.shuffle(val)
-    
+
+    correct = random.randint(0,3)
+    swap = ''
     x = 0
-    # zjistí index správné odpovědi
+
+    def answer_on_button():
+        if x > 3:
+            swap = val[x]           
+            val[x] = val[correct]
+            val[correct] = swap
+        return
+
+
+    # zjistí index správné odpovědi a nahradí jej pokud neexistuje tlačítko se správnou odpovědí
     if misto == 'opava':
         x = val.index('Opava')
-        print(x)
+        answer_on_button()
     elif misto == 'paris':
         x = val.index('Paříž')
-        print(x)
+        answer_on_button()
     elif misto == 'praha':
         x = val.index('Praha')
-        print(x)
+        answer_on_button()
     elif misto == 'ostrava':
         x = val.index('Ostrava')
-        print(x)
+        answer_on_button()
+
+    print(correct)
 
 
 
