@@ -33,48 +33,74 @@ class Button(pygame.sprite.Sprite):
     def __init__(self):
         super(Button, self).__init__()
 
-        self.surf = pygame.image.load(f"foto/button_bg.jpg").convert()
+        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
 
         self.rect = self.surf.get_rect(
             center=((SCREEN_WIDTH / 2 - 200), (SCREEN_HEIGHT / 2 + 257),
                     )
         )
 
+    def yes_yes(self):
+        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+
+    
+    def no_no(self):
+        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
+
 
 class Button2(pygame.sprite.Sprite):
     def __init__(self):
         super(Button2, self).__init__()
 
-        self.surf = pygame.image.load(f"foto/button_bg.jpg").convert()
+        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
 
         self.rect = self.surf.get_rect(
             center=((SCREEN_WIDTH / 2 - 200), (SCREEN_HEIGHT / 2 + 182),
                     )
         )
+    
+    def yes_yes(self):
+        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+
+    def no_no(self):
+        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
 
 class Button3(pygame.sprite.Sprite):
     def __init__(self):
         super(Button3, self).__init__()
 
-        self.surf = pygame.image.load(f"foto/button_bg.jpg").convert()
+        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
 
         self.rect = self.surf.get_rect(
             center=((SCREEN_WIDTH / 2 + 200), (SCREEN_HEIGHT / 2 + 257),
                     )
         )
 
+    def yes_yes(self):
+        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+    
+    def no_no(self):
+        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
 class Button4(pygame.sprite.Sprite):
     def __init__(self):
         super(Button4, self).__init__()
 
-        self.surf = pygame.image.load(f"foto/button_bg.jpg").convert()
+        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
 
         self.rect = self.surf.get_rect(
             center=((SCREEN_WIDTH / 2 + 200), (SCREEN_HEIGHT / 2 + 182),
                     )
         )
+
+    def yes_yes(self):
+        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+    
+    def no_no(self):
+        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
+
+
 while standing:
     running = True
     SCREEN_WIDTH = 800
@@ -132,25 +158,26 @@ while standing:
         if misto == 'opava' and val[a] == 'Opava':
             print('yes')
             score +=1
+            return True
         elif misto == 'ostrava' and val[a] == 'Ostrava':
             print('yes')
             score +=1
+            return True
         elif misto == 'paris' and val[a] == 'Paříž':
             print('yes')
             score +=1
+            return True
         elif misto == 'praha' and val[a] == 'Praha':
             print('yes')
             score +=1
+            return True
         else:
             print('no')
             score = 0
-
-        return 
+            return False
         
-    print(score)
 
     # zjistí index správné odpovědi a nahradí jej pokud neexistuje tlačítko se správnou odpovědí
-    print(val)
     if misto == 'opava':
         x = val.index('Opava')
         answer_on_button()
@@ -163,7 +190,7 @@ while standing:
     elif misto == 'ostrava':
         x = val.index('Ostrava')
         answer_on_button()
-    print(val)
+
 
 
     pygame.mixer.init()
@@ -205,27 +232,39 @@ while standing:
             # při kliknutí update foto
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    print(val, val[0]) 
 
                     is_it_right(0)
+                    if is_it_right(0) == True:
+                        button.yes_yes()
+                    else:
+                        button.no_no()
 
                     running = False
                 elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    print(val, val[1])
 
                     is_it_right(1)
-                    
+                    if is_it_right(1) == True:
+                        button2.yes_yes()
+                    else:
+                        button2.no_no()
+
                     running = False
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    print(val, val[2])
 
                     is_it_right(2)
+                    if is_it_right(2) == True:
+                        button4.yes_yes()
+                    else:
+                        button4.no_no()
 
                     running = False
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    print(val, val[3])
 
                     is_it_right(3)
+                    if is_it_right(3) == True:
+                        button3.yes_yes()
+                    else:
+                        button3.no_no()
 
                     running = False
                 else:
