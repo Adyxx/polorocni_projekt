@@ -9,6 +9,7 @@ from pygame.locals import (
 
 standing = True
 
+
 rozhodnuti1 = 0
 rozhodnuti = 0
 try:
