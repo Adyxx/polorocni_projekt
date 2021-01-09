@@ -1,13 +1,11 @@
-import pygame
 import random
-import os
+import pygame
 from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
-    QUIT,
-    MOUSEBUTTONDOWN,
-    RLEACCEL
+    QUIT
 )
+
 standing = True
 
 rozhodnuti1 = 0
