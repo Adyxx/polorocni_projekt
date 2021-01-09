@@ -10,7 +10,7 @@ from pygame.locals import (
 )
 standing = True
 
-rozhodnuti1 = 0
+
 rozhodnuti = 0
 try:
     f = open("score.txt", "r")
@@ -42,72 +42,19 @@ class Foto(pygame.sprite.Sprite):
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x, y):
         super(Button, self).__init__()
 
         self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
 
         self.rect = self.surf.get_rect(
-            center=((SCREEN_WIDTH / 2 - 200), (SCREEN_HEIGHT / 2 + 257),
+            center=((SCREEN_WIDTH / 2 + x), (SCREEN_HEIGHT / 2 + y),
                     )
         )
 
     def yes_yes(self):
         self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
 
-    
-    def no_no(self):
-        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
-
-
-class Button2(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Button2, self).__init__()
-
-        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
-
-        self.rect = self.surf.get_rect(
-            center=((SCREEN_WIDTH / 2 - 200), (SCREEN_HEIGHT / 2 + 182),
-                    )
-        )
-    
-    def yes_yes(self):
-        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
-
-    def no_no(self):
-        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
-
-
-class Button3(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Button3, self).__init__()
-
-        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
-
-        self.rect = self.surf.get_rect(
-            center=((SCREEN_WIDTH / 2 + 200), (SCREEN_HEIGHT / 2 + 257),
-                    )
-        )
-
-    def yes_yes(self):
-        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
-    
-    def no_no(self):
-        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
-
-class Button4(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Button4, self).__init__()
-
-        self.surf = pygame.image.load(f"foto/button_bg1.jpg").convert()
-
-        self.rect = self.surf.get_rect(
-            center=((SCREEN_WIDTH / 2 + 200), (SCREEN_HEIGHT / 2 + 182),
-                    )
-        )
-
-    def yes_yes(self):
-        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
     
     def no_no(self):
         self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
@@ -119,9 +66,9 @@ while standing:
     SCREEN_HEIGHT = 600
     cislo = 1
     # random rozhodnutí, jaké město se bude hádat
-    while rozhodnuti == rozhodnuti1:
-        rozhodnuti = random.randint(1,8)
-    rozhodnuti1 = rozhodnuti
+   
+    rozhodnuti = random.randint(1,8)
+
     misto = ""
     if rozhodnuti == 1:
         misto = "opava"
@@ -139,8 +86,6 @@ while standing:
         misto = "new_york"
     elif rozhodnuti == 8:
         misto = "kyoto"
-
-    
     pole = [0,1,2,3,4,5,6,7]
     val = [0,0,0,0,0,0,0,0]
     random.shuffle(pole)
@@ -176,7 +121,32 @@ while standing:
             val[correct] = swap
         return
 
-    
+    # zjistí index správné odpovědi a nahradí jej pokud neexistuje tlačítko se správnou odpovědí
+    if misto == 'opava':
+        x = val.index('Opava')
+        answer_on_button()
+    elif misto == 'paris':
+        x = val.index('Paříž')
+        answer_on_button()
+    elif misto == 'praha':
+        x = val.index('Praha')
+        answer_on_button()
+    elif misto == 'ostrava':
+        x = val.index('Ostrava')
+        answer_on_button()
+    elif misto == 'tokyo':
+        x = val.index('Tokyo')
+        answer_on_button()
+    elif misto == 'moskva':
+        x = val.index('Moskva')
+        answer_on_button()
+    elif misto == 'new_york':
+        x = val.index('New York')
+        answer_on_button()
+    elif misto == 'kyoto':
+        x = val.index('Kyoto')
+        answer_on_button()
+
     def is_it_right(a, f):
         f = open("score.txt", "r")
         global score
@@ -264,34 +234,6 @@ while standing:
             score = 0
             return False
         
-
-    # zjistí index správné odpovědi a nahradí jej pokud neexistuje tlačítko se správnou odpovědí
-    if misto == 'opava':
-        x = val.index('Opava')
-        answer_on_button()
-    elif misto == 'paris':
-        x = val.index('Paříž')
-        answer_on_button()
-    elif misto == 'praha':
-        x = val.index('Praha')
-        answer_on_button()
-    elif misto == 'ostrava':
-        x = val.index('Ostrava')
-        answer_on_button()
-    elif misto == 'tokyo':
-        x = val.index('Tokyo')
-        answer_on_button()
-    elif misto == 'moskva':
-        x = val.index('Moskva')
-        answer_on_button()
-    elif misto == 'new_york':
-        x = val.index('New York')
-        answer_on_button()
-    elif misto == 'kyoto':
-        x = val.index('Kyoto')
-        answer_on_button()
-
-
     pygame.mixer.init()
 
     pygame.init()
@@ -304,10 +246,11 @@ while standing:
     all_sprites = pygame.sprite.Group()
 
     foto = Foto()
-    button = Button()
-    button2 = Button2()
-    button3 = Button3()
-    button4 = Button4()
+    button = Button(-200, 257)
+    button2 = Button(-200, 182)
+    button3 = Button(200, 257)
+    button4 = Button(200, 182)
+
     all_sprites.add(button)
     all_sprites.add(button2)
     all_sprites.add(button3)
