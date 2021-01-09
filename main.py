@@ -114,13 +114,7 @@ while standing:
         global score
         global h_score
         if misto == 'opava' and val[a] == 'Opava':
-            score +=1
-            if (score > int(f.read())):
-                f.close()
-                f = open("score.txt", "w")
-                f.write(str(score))
-                f.close()
-                h_score = score
+
             return True
 
         elif misto == 'ostrava' and val[a] == 'Ostrava':
@@ -135,7 +129,7 @@ while standing:
 
         elif misto == 'paris' and val[a] == 'Paříž':
             score +=1
-         
+
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
@@ -191,7 +185,7 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True        
+            return True
         else:
             score = 0
             return False
