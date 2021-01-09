@@ -56,6 +56,10 @@ class Button(pygame.sprite.Sprite):
     def no_no(self):
         self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
+def high(score, h_score):
+    if (score > int(h_score)):
+        h_score = score
+    return h_score
 
 while standing:
     running = True
@@ -109,64 +113,69 @@ while standing:
         x = val.index('Kyoto')
     answer_on_button()
 
-    def is_it_right(a, f):
+    def is_it_right(a, f,score, h_score):
         f = open("score.txt", "r")
-        global score
-        global h_score
-        if misto == 'opava' and val[a] == 'Opava':
 
-            return True
+        if misto == 'opava' and val[a] == 'Opava':
+            score += 1
+            if (score > int(f.read())):
+                f.close()
+                f = open("score.txt", "w")
+                f.write(str(score))
+                f.close()
+                h_score = score
+            return score
 
         elif misto == 'ostrava' and val[a] == 'Ostrava':
-            score +=1
+            score += 1
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
+
 
         elif misto == 'paris' and val[a] == 'Paříž':
-            score +=1
-
+            score += 1
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
 
         elif misto == 'praha' and val[a] == 'Praha':
-            score +=1
+            score += 1
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
 
         elif misto == 'moskva' and val[a] == 'Moskva':
-            score +=1
+            score += 1
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
 
         elif misto == 'new_york' and val[a] == 'New York':
-            score +=1
+            score += 1
             if (score > int(f.read())):
                 f.close()
                 f = open("score.txt", "w")
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
 
         elif misto == 'tokyo' and val[a] == 'Tokyo':
             score +=1
@@ -176,7 +185,7 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
         elif misto == 'kyoto' and val[a] == 'Kyoto':
             score +=1
             if (score > int(f.read())):
@@ -185,10 +194,10 @@ while standing:
                 f.write(str(score))
                 f.close()
                 h_score = score
-            return True
+            return score
         else:
             score = 0
-            return False
+            return score
         
     pygame.mixer.init()
 
@@ -229,9 +238,12 @@ while standing:
                 running = False
             # při kliknutí update foto
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
 
-                    if is_it_right(0,f) == True:
+                if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
+                    score = is_it_right(0,f, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(0,f, score, h_score) > 0:
+
                         button.yes_yes()
                     else:
                         button.no_no()
@@ -239,8 +251,9 @@ while standing:
                     running = False
 
                 elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-
-                    if is_it_right(1,f) == True:
+                    score = is_it_right(1, f, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(1,f, score, h_score) > 0:
                         button2.yes_yes()
                     else:
                         button2.no_no()
@@ -248,8 +261,9 @@ while standing:
                     running = False
 
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-
-                    if is_it_right(2,f) == True:
+                    score = is_it_right(2, f, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(2,f, score, h_score) > 0:
                         button4.yes_yes()
                     else:
                         button4.no_no()
@@ -257,8 +271,9 @@ while standing:
                     running = False
 
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-
-                    if is_it_right(3, f) == True:
+                    score = is_it_right(3, f, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(3, f, score, h_score) > 0:
                         button3.yes_yes()
                     else:
                         button3.no_no()
