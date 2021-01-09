@@ -38,7 +38,6 @@ class Foto(pygame.sprite.Sprite):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
 
-
 class Button(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super(Button, self).__init__()
@@ -92,6 +91,7 @@ while standing:
         x = val.index('Ostrava')
     elif rozhodnuti == 3:
         misto = "paris"
+        x = val.index('Paříž')
     elif rozhodnuti == 4:
         misto = "praha"
         x = val.index('Praha')
