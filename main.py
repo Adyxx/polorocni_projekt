@@ -1,5 +1,6 @@
 import random
 import pygame
+import json
 import unidecode
 from pygame.locals import (
     K_ESCAPE,
@@ -8,16 +9,16 @@ from pygame.locals import (
 )
 
 standing = True
+json_test = 0
+h_score = 0
 try:
-    f = open("score.txt", "r")
+    with open('score.json') as json_file:
+        h_score = json.load(json_file)
 except:
-    f = open("score.txt", "w")
-    f.write("0")
-    f.close()
-    f = open("score.txt", "r")
+    with open('score.json', 'w') as json_file:
+        json.dump(json_test, json_file)
 
 score = 0
-h_score = f.read()
 
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
@@ -53,14 +54,12 @@ class Button(pygame.sprite.Sprite):
         else:
             self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
-
-def high(f, score, h_score):
+def high(score, h_score):
     if (score > int(h_score)):
-        f.close()
-        f = open("score.txt", "w")
-        f.write(str(score))
-        f.close()
-        h_score = score
+        with open('score.json', 'w') as json_file:
+            json.dump(str(score), json_file)
+        with open('score.json') as json_file:
+            h_score = json.load(json_file)
     return h_score
 
 while standing:
@@ -88,8 +87,7 @@ while standing:
             x = val.index(val[i])
             answer_on_button()
 
-    def is_it_right(a, f, score, h_score):
-        f = open("score.txt", "r")
+    def is_it_right(a, score, h_score):
         if misto != unidecode.unidecode(val[a].lower().replace(" ", "_")):
             score = 0
         else:
@@ -136,19 +134,19 @@ while standing:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 
                 if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(0,f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(0,f, score, h_score) > 0:
-                        button.change_color(1)
+                    score = is_it_right(0,score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(0,score, h_score) > 0:
+                        button1.change_color(1)
                     else:
-                        button.change_color(0)
+                        button1.change_color(0)
 
                     running = False
 
                 elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(1, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(1,f, score, h_score) > 0:
+                    score = is_it_right(1, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(1,score, h_score) > 0:
                         button2.change_color(1)
                     else:
                         button2.change_color(0)
@@ -156,9 +154,9 @@ while standing:
                     running = False
 
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(3, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(3, f, score, h_score) > 0:
+                    score = is_it_right(3, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(3, score, h_score) > 0:
                         button3.change_color(1)
                     else:
                         button3.change_color(0)
@@ -166,9 +164,9 @@ while standing:
                     running = False
 
                 elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(2, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(2,f, score, h_score) > 0:
+                    score = is_it_right(2, score, h_score)
+                    h_score = high(score, h_score)
+                    if is_it_right(2,score, h_score) > 0:
                         button4.change_color(1)
                     else:
                         button4.change_color(0)
@@ -232,5 +230,3 @@ while standing:
         clock.tick(45)
 
     pygame.mixer.quit()
-
-f.close()
