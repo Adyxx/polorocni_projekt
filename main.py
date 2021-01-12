@@ -126,7 +126,7 @@ while standing:
 
     foto = Foto()
 
-    buttons = [(-200, 257), (-200, 182), (200, 257), (200, 182)]
+   
     button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
