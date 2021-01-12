@@ -172,7 +172,6 @@ while standing:
                         cislo = 1
                 foto.update(pressed_keys, cislo)
 
-
         screen.fill((0, 0, 0))
 
         surf = pygame.Surface((50, 50))
