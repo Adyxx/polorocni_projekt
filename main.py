@@ -218,4 +218,3 @@ while standing:
 
         clock.tick(45)
 
-    pygame.mixer.quit()
