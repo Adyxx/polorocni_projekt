@@ -8,10 +8,6 @@ from pygame.locals import (
 )
 
 standing = True
-
-
-rozhodnuti1 = 0
-rozhodnuti = 0
 try:
     f = open("score.txt", "r")
 except:
@@ -22,6 +18,8 @@ except:
 
 score = 0
 h_score = f.read()
+
+
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__()
@@ -39,6 +37,7 @@ class Foto(pygame.sprite.Sprite):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
 
+
 class Button(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super(Button, self).__init__()
@@ -50,12 +49,12 @@ class Button(pygame.sprite.Sprite):
                     )
         )
 
-    def yes_yes(self):
-        self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+    def change_color(self, num):
+        if num == 1:
+            self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+        else:
+            self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
-    
-    def no_no(self):
-        self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
 def high(f, score, h_score):
     if (score > int(h_score)):
@@ -66,66 +65,54 @@ def high(f, score, h_score):
         h_score = score
     return h_score
 
+
+def control(wi, wid, he, hei, l, f, score, h_score, q):
+    if width / 2 + wi <= mouse[0] <= width / 2 + wid and height / 2 + he <= mouse[1] <= height / 2 + hei:
+        score = is_it_right(l, f, score, h_score)
+        h_score = high(f, score, h_score)
+        if is_it_right(l, f, score, h_score) > 0:
+            q.change_color(1)
+        else:
+            q.change_color(0)
+    return score
+
+
 while standing:
     running = True
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
     cislo = 1
-    # random rozhodnutí, jaké město se bude hádat
-    while rozhodnuti == rozhodnuti1:
-        rozhodnuti = random.randint(1,8)
-    rozhodnuti1 = rozhodnuti
 
-    val = ['Opava','Ostrava','Paříž','Praha','Tokyo','Moskva','New York','Kyoto']
+    rozhodnuti = random.randint(0, 7)
+
+    val = ['Opava', 'Ostrava', 'Paříž', 'Praha', 'Tokyo', 'Moskva', 'New York', 'Kyoto']
     random.shuffle(val)
     misto = ''
-    swap = ''
-    correct = random.randint(0,3)
+    correct = random.randint(0, 3)
     x = 0
+
 
     def answer_on_button():
         if x > 3:
-            swap = val[x]           
-            val[x] = val[correct]
-            val[correct] = swap
+            val[x], val[correct] = val[correct], val[x]
         return
 
-    if rozhodnuti == 1:
-        misto = "opava"
-        x = val.index('Opava')
-    elif rozhodnuti == 2:
-        misto = "ostrava"
-        x = val.index('Ostrava')
-    elif rozhodnuti == 3:
-        misto = "pariz"
-        x = val.index('Paříž')
-    elif rozhodnuti == 4:
-        misto = "praha"
-        x = val.index('Praha')
-    elif rozhodnuti == 5:
-        misto = "tokyo"
-        x = val.index('Tokyo')
-    elif rozhodnuti == 6:
-        misto = "moskva"
-        x = val.index('Moskva')
-    elif rozhodnuti == 7:
-        misto = "new_york"
-        x = val.index('New York')
-    elif rozhodnuti == 8:
-        misto = "kyoto"
-        x = val.index('Kyoto')
-    answer_on_button()
 
-    def is_it_right(a, f,score, h_score):
+    for i in range(8):
+        if rozhodnuti == i:
+            misto = unidecode.unidecode(val[i].lower().replace(" ", "_"))
+            x = val.index(val[i])
+            answer_on_button()
+
+
+    def is_it_right(a, f, score, h_score):
         f = open("score.txt", "r")
-        val[a] = val[a].replace(" ", "_")
-        if misto != unidecode.unidecode(val[a].lower()):
+        if misto != unidecode.unidecode(val[a].lower().replace(" ", "_")):
             score = 0
         else:
-            score +=1
+            score += 1
         return score
-   
-    pygame.mixer.init()
+
 
     pygame.init()
     pygame.font.init()
@@ -137,18 +124,19 @@ while standing:
     all_sprites = pygame.sprite.Group()
 
     foto = Foto()
-    button = Button(-200, 257)
+
+    buttons = [(-200, 257), (-200, 182), (200, 257), (200, 182)]
+    button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
     button4 = Button(200, 182)
 
-    all_sprites.add(button)
+    all_sprites.add(button1)
     all_sprites.add(button2)
     all_sprites.add(button3)
     all_sprites.add(button4)
 
     all_sprites.add(foto)
-
 
     while running:
         pressed_keys = pygame.mouse.get_pressed()
@@ -162,55 +150,18 @@ while standing:
             elif event.type == QUIT:
                 standing = False
                 running = False
+
             # při kliknutí update foto
             if event.type == pygame.MOUSEBUTTONDOWN:
-                
-                if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(0,f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(0,f, score, h_score) > 0:
-
-                        button.yes_yes()
-                    else:
-                        button.no_no()
-
-                    running = False
-
-                elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(1, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(1,f, score, h_score) > 0:
-                        button2.yes_yes()
-                    else:
-                        button2.no_no()
-
-                    running = False
-
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(2, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(2,f, score, h_score) > 0:
-                        button4.yes_yes()
-                    else:
-                        button4.no_no()
-
-                    running = False
-
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(3, f, score, h_score)
-                    h_score = high(f, score, h_score)
-                    if is_it_right(3, f, score, h_score) > 0:
-                        button3.yes_yes()
-                    else:
-                        button3.no_no()
-
-                    running = False
-                else:
-                    cislo = cislo + 1
-                    if cislo == 5:
-                        cislo = 1
-
-                foto.update(pressed_keys, cislo)
+                q = button1
+                score = control(-390, -10, 222, 292, 0, f, score, h_score, q)
+                q = button2
+                score = control(-390, -10, 147, 217, 1, f, score, h_score, q)
+                q = button3
+                score = control(10, 390, 222, 292, 3, f, score, h_score, q)
+                q = button4
+                score = control(10, 390, 147, 217, 2, f, score, h_score, q)
+                running = False
 
         screen.fill((0, 0, 0))
 
@@ -221,10 +172,10 @@ while standing:
         height = screen.get_height()
         mouse = pygame.mouse.get_pos()
 
-        ###################################################
         text = pygame.font.SysFont('Arial Black', 50)
         score_text = pygame.font.SysFont('Comic Sans', 40)
         h_score_text = pygame.font.SysFont('Comic Sans', 40)
+
         text_b1 = text.render(f'{val[0]}', True, (255, 255, 255))
         textRect = text_b1.get_rect()
         textRect.center = (width / 2 - 200, height / 2 + 252)
@@ -241,14 +192,13 @@ while standing:
         textRect4 = text_b4.get_rect()
         textRect4.center = (width / 2 + 200, height / 2 + 252)
 
-        text_score = score_text.render(f'Score: {score}', False, (0,0,0))
+        text_score = score_text.render(f'Score: {score}', False, (0, 0, 0))
         scoreRect = text_score.get_rect()
         scoreRect = (width / 2 - 390, height / 2 - 260)
 
         h_text_score = h_score_text.render(f'High score: {h_score}', False, (0, 0, 0))
         h_scoreRect = h_text_score.get_rect()
         h_scoreRect = (width / 2 - 390, height / 2 - 290)
-        ###################################################
 
         for entity in all_sprites:
             screen.blit(entity.surf, entity.rect)
