@@ -20,6 +20,7 @@ except:
 
 score = 0
 
+
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
         super(Foto, self).__init__()
@@ -36,6 +37,7 @@ class Foto(pygame.sprite.Sprite):
     def update(self, pressed_keys, cislo):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
         pygame.time.delay(200)
+
 
 class Button(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -54,6 +56,7 @@ class Button(pygame.sprite.Sprite):
         else:
             self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
+
 def high(score, h_score):
     if (score > int(h_score)):
         with open('score.json', 'w') as json_file:
@@ -62,24 +65,27 @@ def high(score, h_score):
             h_score = json.load(json_file)
     return h_score
 
+
 while standing:
     running = True
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
     cislo = 1
 
-    rozhodnuti = random.randint(0,7)
+    rozhodnuti = random.randint(0, 7)
 
-    val = ['Opava','Ostrava','Paříž','Praha','Tokyo','Moskva','New York','Kyoto']
+    val = ['Opava', 'Ostrava', 'Paříž', 'Praha', 'Tokyo', 'Moskva', 'New York', 'Kyoto']
     random.shuffle(val)
     misto = ''
-    correct = random.randint(0,3)
+    correct = random.randint(0, 3)
     x = 0
 
+
     def answer_on_button():
-        if x > 3:           
+        if x > 3:
             val[x], val[correct] = val[correct], val[x]
         return
+
 
     for i in range(8):
         if rozhodnuti == i:
@@ -87,13 +93,15 @@ while standing:
             x = val.index(val[i])
             answer_on_button()
 
+
     def is_it_right(a, score, h_score):
         if misto != unidecode.unidecode(val[a].lower().replace(" ", "_")):
             score = 0
         else:
-            score +=1
+            score += 1
         return score
-   
+
+
     def control(wi, wid, he, hei, l, score, h_score, q, running):
         if width / 2 + wi <= mouse[0] <= width / 2 + wid and height / 2 + he <= mouse[1] <= height / 2 + hei:
             score = is_it_right(l, score, h_score)
@@ -105,6 +113,7 @@ while standing:
                 q.change_color(0)
                 running = False
         return score, running, h_score
+
 
     pygame.init()
     pygame.font.init()
@@ -129,7 +138,7 @@ while standing:
     all_sprites.add(button4)
 
     all_sprites.add(foto)
-    
+
     while running:
         pressed_keys = pygame.mouse.get_pressed()
         for event in pygame.event.get():
@@ -189,7 +198,7 @@ while standing:
         textRect4 = text_b4.get_rect()
         textRect4.center = (width / 2 + 200, height / 2 + 252)
 
-        text_score = score_text.render(f'Score: {score}', False, (0,0,0))
+        text_score = score_text.render(f'Score: {score}', False, (0, 0, 0))
         scoreRect = text_score.get_rect()
         scoreRect = (width / 2 - 390, height / 2 - 260)
 
