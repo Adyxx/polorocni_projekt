@@ -66,15 +66,18 @@ def high(f, score, h_score):
     return h_score
 
 
-def control(wi, wid, he, hei, l, f, score, h_score, q):
+def control(wi, wid, he, hei, l, f, score, h_score, q, running):
     if width / 2 + wi <= mouse[0] <= width / 2 + wid and height / 2 + he <= mouse[1] <= height / 2 + hei:
         score = is_it_right(l, f, score, h_score)
         h_score = high(f, score, h_score)
         if is_it_right(l, f, score, h_score) > 0:
             q.change_color(1)
+            running = False
         else:
             q.change_color(0)
-    return score
+            running = False
+
+    return score, running
 
 
 while standing:
@@ -153,15 +156,22 @@ while standing:
 
             # při kliknutí update foto
             if event.type == pygame.MOUSEBUTTONDOWN:
+                s = score
                 q = button1
-                score = control(-390, -10, 222, 292, 0, f, score, h_score, q)
+                score, running = control(-390, -10, 222, 292, 0, f, score, h_score, q, running)
                 q = button2
-                score = control(-390, -10, 147, 217, 1, f, score, h_score, q)
+                score, running = control(-390, -10, 147, 217, 1, f, score, h_score, q, running)
                 q = button3
-                score = control(10, 390, 222, 292, 3, f, score, h_score, q)
+                score, running = control(10, 390, 222, 292, 3, f, score, h_score, q, running)
                 q = button4
-                score = control(10, 390, 147, 217, 2, f, score, h_score, q)
-                running = False
+                score, running = control(10, 390, 147, 217, 2, f, score, h_score, q, running)
+
+                if s == score:
+                    cislo = cislo + 1
+                    if cislo == 5:
+                        cislo = 1
+                foto.update(pressed_keys, cislo)
+
 
         screen.fill((0, 0, 0))
 
