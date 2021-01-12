@@ -94,6 +94,18 @@ while standing:
             score +=1
         return score
    
+    def control(wi, wid, he, hei, l, score, h_score, q, running):
+        if width / 2 + wi <= mouse[0] <= width / 2 + wid and height / 2 + he <= mouse[1] <= height / 2 + hei:
+            score = is_it_right(l, score, h_score)
+            h_score = high(score, h_score)
+            if is_it_right(l, score, h_score) > 0:
+                q.change_color(1)
+                running = False
+            else:
+                q.change_color(0)
+                running = False
+        return score, running, h_score
+
     pygame.init()
     pygame.font.init()
 
@@ -130,54 +142,22 @@ while standing:
             elif event.type == QUIT:
                 standing = False
                 running = False
-            # při kliknutí update foto
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                
-                if width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(0,score, h_score)
-                    h_score = high(score, h_score)
-                    if is_it_right(0,score, h_score) > 0:
-                        button1.change_color(1)
-                    else:
-                        button1.change_color(0)
+                s = score
+                q = button1
+                score, running, h_score = control(-390, -10, 222, 292, 0, score, h_score, q, running)
+                q = button2
+                score, running, h_score = control(-390, -10, 147, 217, 1, score, h_score, q, running)
+                q = button3
+                score, running, h_score = control(10, 390, 222, 292, 3, score, h_score, q, running)
+                q = button4
+                score, running, h_score = control(10, 390, 147, 217, 2, score, h_score, q, running)
 
-                    running = False
-
-                elif width/2 - 390 <= mouse[0] <= width/2 - 10 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(1, score, h_score)
-                    h_score = high(score, h_score)
-                    if is_it_right(1,score, h_score) > 0:
-                        button2.change_color(1)
-                    else:
-                        button2.change_color(0)
-
-                    running = False
-
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 222 <= mouse[1] <= height/2 + 292:
-                    score = is_it_right(3, score, h_score)
-                    h_score = high(score, h_score)
-                    if is_it_right(3, score, h_score) > 0:
-                        button3.change_color(1)
-                    else:
-                        button3.change_color(0)
-
-                    running = False
-
-                elif width/2 + 10 <= mouse[0] <= width/2 + 390 and height/2 + 147 <= mouse[1] <= height/2 + 217:
-                    score = is_it_right(2, score, h_score)
-                    h_score = high(score, h_score)
-                    if is_it_right(2,score, h_score) > 0:
-                        button4.change_color(1)
-                    else:
-                        button4.change_color(0)
-
-                    running = False
-
-                else:
+                if s == score:
                     cislo = cislo + 1
                     if cislo == 5:
                         cislo = 1
-
                 foto.update(pressed_keys, cislo)
 
         screen.fill((0, 0, 0))
