@@ -19,7 +19,7 @@ except:
         json.dump(json_test, json_file)
 
 score = 0
-
+last = ''
 
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
@@ -36,7 +36,6 @@ class Foto(pygame.sprite.Sprite):
     # znovunačítání obrázků při kliknutí
     def update(self, pressed_keys, cislo):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
-        pygame.time.delay(200)
 
 
 class Button(pygame.sprite.Sprite):
@@ -51,11 +50,10 @@ class Button(pygame.sprite.Sprite):
         )
 
     def change_color(self, num):
-        if num == 1:
-            self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
-        else:
-            self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
-
+            if num == 1:
+                self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+            else:
+                self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
 def high(score, h_score):
     if (score > int(h_score)):
@@ -72,13 +70,18 @@ while standing:
     SCREEN_HEIGHT = 600
     cislo = 1
 
-    rozhodnuti = random.randint(0, 7)
-
     val = ['Opava', 'Ostrava', 'Paříž', 'Praha', 'Tokyo', 'Moskva', 'New York', 'Kyoto']
     random.shuffle(val)
     misto = ''
     correct = random.randint(0, 3)
     x = 0
+
+    rozhodnuti = random.randint(0, 7)
+
+    while val[rozhodnuti] == last:
+        rozhodnuti = random.randint(0, 7)
+
+    last = val[rozhodnuti]
 
 
     def answer_on_button():
@@ -92,6 +95,7 @@ while standing:
             misto = unidecode.unidecode(val[i].lower().replace(" ", "_"))
             x = val.index(val[i])
             answer_on_button()
+
 
 
     def is_it_right(a, score, h_score):
@@ -108,12 +112,10 @@ while standing:
             h_score = high(score, h_score)
             if is_it_right(l, score, h_score) > 0:
                 q.change_color(1)
-                running = False
             else:
                 q.change_color(0)
-                running = False
+            running = False
         return score, running, h_score
-
 
     pygame.init()
     pygame.font.init()
@@ -126,7 +128,6 @@ while standing:
 
     foto = Foto()
 
-   
     button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
@@ -154,14 +155,11 @@ while standing:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 s = score
-                q = button1
-                score, running, h_score = control(-390, -10, 222, 292, 0, score, h_score, q, running)
-                q = button2
-                score, running, h_score = control(-390, -10, 147, 217, 1, score, h_score, q, running)
-                q = button3
-                score, running, h_score = control(10, 390, 222, 292, 3, score, h_score, q, running)
-                q = button4
-                score, running, h_score = control(10, 390, 147, 217, 2, score, h_score, q, running)
+
+                score, running, h_score = control(-390, -10, 222, 292, 0, score, h_score, button1, running)
+                score, running, h_score = control(-390, -10, 147, 217, 1, score, h_score, button2, running)
+                score, running, h_score = control(10, 390, 222, 292, 3, score, h_score, button3, running)
+                score, running, h_score = control(10, 390, 147, 217, 2, score, h_score, button4, running)
 
                 if s == score:
                     cislo = cislo + 1
@@ -182,21 +180,15 @@ while standing:
         score_text = pygame.font.SysFont('Comic Sans', 40)
         h_score_text = pygame.font.SysFont('Comic Sans', 40)
 
-        text_b1 = text.render(f'{val[0]}', True, (255, 255, 255))
-        textRect = text_b1.get_rect()
-        textRect.center = (width / 2 - 200, height / 2 + 252)
-
-        text_b2 = text.render(f'{val[1]}', True, (255, 255, 255))
-        textRect2 = text_b2.get_rect()
-        textRect2.center = (width / 2 - 200, height / 2 + 177)
-
-        text_b3 = text.render(f'{val[2]}', True, (255, 255, 255))
-        textRect3 = text_b3.get_rect()
-        textRect3.center = (width / 2 + 200, height / 2 + 177)
-
-        text_b4 = text.render(f'{val[3]}', True, (255, 255, 255))
-        textRect4 = text_b4.get_rect()
-        textRect4.center = (width / 2 + 200, height / 2 + 252)
+        text_b = [0, 0, 0, 0]
+        textRect = [0, 0, 0, 0]
+        xx = [-200, -200, 200, 200]
+        yy = [252, 177, 177, 252]
+        
+        for i in range(4):
+            text_b[i] = text.render(f'{val[i]}', True, (255, 255, 255))
+            textRect[i] = text_b[i].get_rect()
+            textRect[i].center = (width / 2 + xx[i], height / 2 + yy[i])
 
         text_score = score_text.render(f'Score: {score}', False, (0, 0, 0))
         scoreRect = text_score.get_rect()
@@ -207,14 +199,12 @@ while standing:
         h_scoreRect = (width / 2 - 390, height / 2 - 290)
 
         for entity in all_sprites:
+            for i in range(4):
+                screen.blit(text_b[i], textRect[i])
+
             screen.blit(entity.surf, entity.rect)
-            screen.blit(text_b1, textRect)
-            screen.blit(text_b2, textRect2)
-            screen.blit(text_b3, textRect3)
-            screen.blit(text_b4, textRect4)
             screen.blit(text_score, scoreRect)
             screen.blit(h_text_score, h_scoreRect)
+
         pygame.display.flip()
-
-        clock.tick(45)
-
+        clock.tick(20)
