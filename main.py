@@ -127,6 +127,7 @@ while standing:
     all_sprites = pygame.sprite.Group()
 
     foto = Foto()
+
     button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
