@@ -36,7 +36,6 @@ class Foto(pygame.sprite.Sprite):
     # znovunačítání obrázků při kliknutí
     def update(self, pressed_keys, cislo):
         self.surf = pygame.image.load(f"foto/{misto}{cislo}.jpg").convert()
-        pygame.time.delay(200)
 
 
 class Button(pygame.sprite.Sprite):
@@ -51,11 +50,10 @@ class Button(pygame.sprite.Sprite):
         )
 
     def change_color(self, num):
-        if num == 1:
-            self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
-        else:
-            self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
-
+            if num == 1:
+                self.surf = pygame.image.load(f"foto/button_bg3.jpg").convert()
+            else:
+                self.surf = pygame.image.load(f"foto/button_bg2.jpg").convert()
 
 def high(score, h_score):
     if (score > int(h_score)):
@@ -108,10 +106,9 @@ while standing:
             h_score = high(score, h_score)
             if is_it_right(l, score, h_score) > 0:
                 q.change_color(1)
-                running = False
             else:
                 q.change_color(0)
-                running = False
+            running = False
         return score, running, h_score
 
     pygame.init()
@@ -124,7 +121,6 @@ while standing:
     all_sprites = pygame.sprite.Group()
 
     foto = Foto()
-
     button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
@@ -204,4 +200,4 @@ while standing:
             screen.blit(h_text_score, h_scoreRect)
 
         pygame.display.flip()
-        clock.tick(10)
+        clock.tick(15)
