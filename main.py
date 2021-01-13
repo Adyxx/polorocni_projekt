@@ -19,7 +19,7 @@ except:
         json.dump(json_test, json_file)
 
 score = 0
-
+last = ''
 
 class Foto(pygame.sprite.Sprite):
     def __init__(self):
@@ -70,13 +70,18 @@ while standing:
     SCREEN_HEIGHT = 600
     cislo = 1
 
-    rozhodnuti = random.randint(0, 7)
-
     val = ['Opava', 'Ostrava', 'Paříž', 'Praha', 'Tokyo', 'Moskva', 'New York', 'Kyoto']
     random.shuffle(val)
     misto = ''
     correct = random.randint(0, 3)
     x = 0
+
+    rozhodnuti = random.randint(0, 7)
+
+    while val[rozhodnuti] == last:
+        rozhodnuti = random.randint(0, 7)
+
+    last = val[rozhodnuti]
 
 
     def answer_on_button():
@@ -90,6 +95,7 @@ while standing:
             misto = unidecode.unidecode(val[i].lower().replace(" ", "_"))
             x = val.index(val[i])
             answer_on_button()
+
 
 
     def is_it_right(a, score, h_score):
@@ -200,4 +206,4 @@ while standing:
             screen.blit(h_text_score, h_scoreRect)
 
         pygame.display.flip()
-        clock.tick(15)
+        clock.tick(20)
