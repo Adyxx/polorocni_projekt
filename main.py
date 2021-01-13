@@ -114,7 +114,6 @@ while standing:
                 running = False
         return score, running, h_score
 
-
     pygame.init()
     pygame.font.init()
 
@@ -126,7 +125,6 @@ while standing:
 
     foto = Foto()
 
-    buttons = [(-200, 257), (-200, 182), (200, 257), (200, 182)]
     button1 = Button(-200, 257)
     button2 = Button(-200, 182)
     button3 = Button(200, 257)
@@ -182,21 +180,17 @@ while standing:
         score_text = pygame.font.SysFont('Comic Sans', 40)
         h_score_text = pygame.font.SysFont('Comic Sans', 40)
 
-        text_b1 = text.render(f'{val[0]}', True, (255, 255, 255))
-        textRect = text_b1.get_rect()
-        textRect.center = (width / 2 - 200, height / 2 + 252)
+        text_b = [0, 0, 0, 0]
+        textRect = [0, 0, 0, 0]
+        
+        for i in range(4):
+            text_b[i] = text.render(f'{val[i]}', True, (255, 255, 255))
+            textRect[i] = text_b[i].get_rect()
 
-        text_b2 = text.render(f'{val[1]}', True, (255, 255, 255))
-        textRect2 = text_b2.get_rect()
-        textRect2.center = (width / 2 - 200, height / 2 + 177)
-
-        text_b3 = text.render(f'{val[2]}', True, (255, 255, 255))
-        textRect3 = text_b3.get_rect()
-        textRect3.center = (width / 2 + 200, height / 2 + 177)
-
-        text_b4 = text.render(f'{val[3]}', True, (255, 255, 255))
-        textRect4 = text_b4.get_rect()
-        textRect4.center = (width / 2 + 200, height / 2 + 252)
+        textRect[0].center = (width / 2 - 200, height / 2 + 252)
+        textRect[1].center = (width / 2 - 200, height / 2 + 177)
+        textRect[2].center = (width / 2 + 200, height / 2 + 177)
+        textRect[3].center = (width / 2 + 200, height / 2 + 252)
 
         text_score = score_text.render(f'Score: {score}', False, (0, 0, 0))
         scoreRect = text_score.get_rect()
@@ -207,14 +201,12 @@ while standing:
         h_scoreRect = (width / 2 - 390, height / 2 - 290)
 
         for entity in all_sprites:
+            for i in range(4):
+                screen.blit(text_b[i], textRect[i])
+
             screen.blit(entity.surf, entity.rect)
-            screen.blit(text_b1, textRect)
-            screen.blit(text_b2, textRect2)
-            screen.blit(text_b3, textRect3)
-            screen.blit(text_b4, textRect4)
             screen.blit(text_score, scoreRect)
             screen.blit(h_text_score, h_scoreRect)
+
         pygame.display.flip()
-
         clock.tick(45)
-
