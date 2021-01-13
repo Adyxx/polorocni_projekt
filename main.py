@@ -152,14 +152,11 @@ while standing:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 s = score
-                q = button1
-                score, running, h_score = control(-390, -10, 222, 292, 0, score, h_score, q, running)
-                q = button2
-                score, running, h_score = control(-390, -10, 147, 217, 1, score, h_score, q, running)
-                q = button3
-                score, running, h_score = control(10, 390, 222, 292, 3, score, h_score, q, running)
-                q = button4
-                score, running, h_score = control(10, 390, 147, 217, 2, score, h_score, q, running)
+
+                score, running, h_score = control(-390, -10, 222, 292, 0, score, h_score, button1, running)
+                score, running, h_score = control(-390, -10, 147, 217, 1, score, h_score, button2, running)
+                score, running, h_score = control(10, 390, 222, 292, 3, score, h_score, button3, running)
+                score, running, h_score = control(10, 390, 147, 217, 2, score, h_score, button4, running)
 
                 if s == score:
                     cislo = cislo + 1
@@ -207,4 +204,4 @@ while standing:
             screen.blit(h_text_score, h_scoreRect)
 
         pygame.display.flip()
-        clock.tick(45)
+        clock.tick(10)
