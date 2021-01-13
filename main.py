@@ -182,15 +182,13 @@ while standing:
 
         text_b = [0, 0, 0, 0]
         textRect = [0, 0, 0, 0]
+        xx = [-200, -200, 200, 200]
+        yy = [252, 177, 177, 252]
         
         for i in range(4):
             text_b[i] = text.render(f'{val[i]}', True, (255, 255, 255))
             textRect[i] = text_b[i].get_rect()
-
-        textRect[0].center = (width / 2 - 200, height / 2 + 252)
-        textRect[1].center = (width / 2 - 200, height / 2 + 177)
-        textRect[2].center = (width / 2 + 200, height / 2 + 177)
-        textRect[3].center = (width / 2 + 200, height / 2 + 252)
+            textRect[i].center = (width / 2 + xx[i], height / 2 + yy[i])
 
         text_score = score_text.render(f'Score: {score}', False, (0, 0, 0))
         scoreRect = text_score.get_rect()
